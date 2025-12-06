@@ -1,0 +1,350 @@
+// This Source Code Form is subject to the terms of the Mozilla Public
+// License, v. 2.0. If a copy of the MPL was not distributed with this
+// file, You can obtain one at http://mozilla.org/MPL/2.0/.
+//
+// Copyright (c) KODA INC
+
+@use "../_styles/common/refactor/common-refactor.scss" as *;
+
+.modal-overlay {
+  @include flexCenter;
+  position: fixed;
+  z-index: 1000;
+  inset: 0;
+  background-color: rgba(0, 0, 0, 0.6);
+  backdrop-filter: blur(4px);
+}
+
+.modal-container {
+  display: flex;
+  flex-direction: column;
+  max-width: 600px;
+  width: 90%;
+  max-height: 85vh;
+  background: var(--color-background-primary);
+  border-radius: $br-12;
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+  overflow: hidden;
+
+  &.code-generation-modal {
+    max-width: 700px;
+  }
+}
+
+.modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: $s-16 $s-24;
+  border-bottom: 1px solid var(--color-background-tertiary);
+
+  .header-content {
+    display: flex;
+    align-items: center;
+    gap: $s-12;
+  }
+
+  .header-icon {
+    font-size: $fs-24;
+  }
+}
+
+.modal-title {
+  @include titleTipography;
+  font-size: $fs-20;
+  font-weight: $fw-600;
+  color: var(--color-foreground-primary);
+  margin: 0;
+}
+
+.modal-close-btn {
+  @include buttonStyle;
+  @include flexCenter;
+  width: $s-32;
+  height: $s-32;
+  border-radius: $br-8;
+  color: var(--color-foreground-secondary);
+  transition: all 0.2s ease;
+
+  &:hover {
+    background: var(--color-background-tertiary);
+    color: var(--color-foreground-primary);
+  }
+}
+
+.modal-content {
+  flex: 1;
+  overflow-y: auto;
+  padding: $s-24;
+
+  &.code-gen-content {
+    display: flex;
+    flex-direction: column;
+    gap: $s-24;
+  }
+
+  &.generating-content,
+  &.complete-content,
+  &.error-content {
+    @include flexCenter;
+    flex-direction: column;
+    text-align: center;
+    padding: $s-48;
+    gap: $s-16;
+  }
+}
+
+.modal-msg {
+  @include bodyTipography;
+  color: var(--color-foreground-secondary);
+  margin: 0;
+  line-height: 1.5;
+}
+
+.modal-footer {
+  display: flex;
+  justify-content: flex-end;
+  gap: $s-12;
+  padding: $s-16 $s-24;
+  border-top: 1px solid var(--color-background-tertiary);
+}
+
+// Framework & CSS Selectors
+.framework-selector,
+.css-selector {
+  display: flex;
+  flex-direction: column;
+  gap: $s-12;
+}
+
+.selector-label,
+.section-label {
+  @include bodyTipography;
+  font-weight: $fw-600;
+  color: var(--color-foreground-primary);
+}
+
+.framework-options,
+.css-options {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: $s-8;
+}
+
+.framework-option,
+.css-option {
+  @include buttonStyle;
+  display: flex;
+  align-items: center;
+  gap: $s-8;
+  padding: $s-12 $s-16;
+  border: 2px solid var(--color-background-tertiary);
+  border-radius: $br-8;
+  background: var(--color-background-secondary);
+  text-align: left;
+  transition: all 0.2s ease;
+  cursor: pointer;
+
+  &:hover {
+    border-color: var(--color-accent-primary);
+    background: var(--color-background-tertiary);
+  }
+
+  &.selected {
+    border-color: var(--color-accent-primary);
+    background: var(--color-accent-primary-muted, rgba(124, 58, 237, 0.1));
+  }
+
+  .option-icon {
+    font-size: $fs-18;
+  }
+
+  .option-label {
+    @include bodyTipography;
+    font-weight: $fw-500;
+    color: var(--color-foreground-primary);
+  }
+}
+
+// Options Section
+.options-section {
+  display: flex;
+  flex-direction: column;
+  gap: $s-12;
+}
+
+.options-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: $s-12;
+}
+
+.toggle-option {
+  display: flex;
+  flex-direction: column;
+  gap: $s-4;
+}
+
+.toggle-label {
+  display: flex;
+  align-items: center;
+  gap: $s-8;
+  cursor: pointer;
+
+  input[type="checkbox"] {
+    display: none;
+  }
+}
+
+.toggle-switch {
+  width: $s-40;
+  height: $s-24;
+  border-radius: $br-12;
+  background: var(--color-background-tertiary);
+  position: relative;
+  transition: all 0.2s ease;
+
+  &::after {
+    content: "";
+    position: absolute;
+    top: 2px;
+    left: 2px;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background: var(--color-foreground-secondary);
+    transition: all 0.2s ease;
+  }
+
+  &.checked {
+    background: var(--color-accent-primary);
+
+    &::after {
+      left: calc(100% - 22px);
+      background: white;
+    }
+  }
+}
+
+.toggle-text {
+  @include bodyTipography;
+  font-weight: $fw-500;
+  color: var(--color-foreground-primary);
+}
+
+.toggle-description {
+  @include bodyTipography;
+  font-size: $fs-12;
+  color: var(--color-foreground-secondary);
+  padding-left: $s-48;
+}
+
+// Buttons
+.btn-primary,
+.btn-secondary {
+  @include buttonStyle;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: $s-8;
+  padding: $s-12 $s-24;
+  border-radius: $br-8;
+  font-weight: $fw-600;
+  transition: all 0.2s ease;
+  cursor: pointer;
+}
+
+.btn-primary {
+  background: var(--color-accent-primary);
+  color: white;
+
+  &:hover {
+    background: var(--color-accent-primary-hover, #6d28d9);
+    transform: translateY(-1px);
+  }
+
+  &.download-btn {
+    background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+
+    &:hover {
+      background: linear-gradient(135deg, #059669 0%, #047857 100%);
+    }
+  }
+}
+
+.btn-secondary {
+  background: var(--color-background-tertiary);
+  color: var(--color-foreground-primary);
+
+  &:hover {
+    background: var(--color-background-quaternary);
+  }
+}
+
+.btn-icon {
+  font-size: $fs-16;
+}
+
+// Generating State
+.generating-animation {
+  margin-bottom: $s-16;
+}
+
+.generating-title,
+.complete-title,
+.error-title {
+  @include titleTipography;
+  font-size: $fs-18;
+  font-weight: $fw-600;
+  color: var(--color-foreground-primary);
+  margin: 0;
+}
+
+.generating-msg,
+.complete-msg,
+.error-msg {
+  @include bodyTipography;
+  color: var(--color-foreground-secondary);
+  max-width: 400px;
+  line-height: 1.5;
+}
+
+// Complete State
+.success-icon {
+  font-size: 64px;
+  margin-bottom: $s-8;
+}
+
+.result-summary {
+  display: flex;
+  gap: $s-24;
+  padding: $s-16;
+  background: var(--color-background-secondary);
+  border-radius: $br-8;
+  margin-top: $s-8;
+}
+
+.summary-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: $s-4;
+
+  span {
+    @include bodyTipography;
+    font-size: $fs-12;
+    color: var(--color-foreground-secondary);
+  }
+
+  strong {
+    @include titleTipography;
+    font-size: $fs-24;
+    color: var(--color-accent-primary);
+  }
+}
+
+// Error State
+.error-icon {
+  font-size: 64px;
+  margin-bottom: $s-8;
+}

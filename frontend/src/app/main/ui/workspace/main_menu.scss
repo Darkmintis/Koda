@@ -126,3 +126,17 @@
     stroke: var(--icon-foreground);
   }
 }
+
+// Generate Code special styling
+.generate-code {
+  background: linear-gradient(135deg, rgba(124, 58, 237, 0.1) 0%, rgba(168, 85, 247, 0.1) 100%);
+  border-left: 3px solid var(--color-accent-primary, #7c3aed);
+  
+  &:hover {
+    background: linear-gradient(135deg, rgba(124, 58, 237, 0.2) 0%, rgba(168, 85, 247, 0.2) 100%);
+  }
+  
+  .item-icon {
+    margin-right: deprecated.$s-8;
+  }
+}

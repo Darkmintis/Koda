@@ -15,6 +15,7 @@
    [app.main.data.common :as dcm]
    [app.main.data.event :as ev]
    [app.main.data.exports.assets :as de]
+   [app.main.data.exports.code :as cexp]
    [app.main.data.exports.files :as fexp]
    [app.main.data.modal :as modal]
    [app.main.data.plugins :as dp]
@@ -624,7 +625,23 @@
          (mf/deps on-export-frames)
          (fn [event]
            (when (kbd/enter? event)
-             (on-export-frames event))))]
+             (on-export-frames event))))
+
+        on-generate-code
+        (mf/use-fn
+         (mf/deps file-id)
+         (fn [_]
+           (let [page-id (get @st/state :current-page-id)]
+             (st/emit! (cexp/show-code-generation-dialog {:file-id file-id
+                                                          :page-id page-id
+                                                          :origin "workspace:menu"})))))
+
+        on-generate-code-key-down
+        (mf/use-fn
+         (mf/deps on-generate-code)
+         (fn [event]
+           (when (kbd/enter? event)
+             (on-generate-code event))))]
 
     [:> dropdown-menu* {:show true
                         ;; :id "workspace-file-menu"
@@ -695,7 +712,16 @@
                                 :on-key-down on-export-frames-key-down
                                 :id          "file-menu-export-frames"}
         [:span {:class (stl/css :item-name)}
-         (tr "dashboard.export-frames")]])]))
+         (tr "dashboard.export-frames")]])
+
+     [:div {:class (stl/css :separator)}]
+
+     [:> dropdown-menu-item* {:class (stl/css-case :submenu-item true :generate-code true)
+                              :on-click    on-generate-code
+                              :on-key-down on-generate-code-key-down
+                              :id          "file-menu-generate-code"}
+      [:span {:class (stl/css :item-icon)} "⚡"]
+      [:span {:class (stl/css :item-name)} "Generate Code"]]]))
 
 (mf/defc plugins-menu*
   {::mf/props :obj

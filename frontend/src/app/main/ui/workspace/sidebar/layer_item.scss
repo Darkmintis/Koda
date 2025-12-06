@@ -1,0 +1,271 @@
+// This Source Code Form is subject to the terms of the Mozilla Public
+// License, v. 2.0. If a copy of the MPL was not distributed with this
+// file, You can obtain one at http://mozilla.org/MPL/2.0/.
+//
+// Copyright (c) KALEIDOS INC
+
+@use "refactor/common-refactor.scss" as deprecated;
+
+.layer-row {
+  --layer-indentation-size: calc(#{deprecated.$s-4} * 6);
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  width: 100%;
+  background-color: var(--layer-row-background-color);
+  border: deprecated.$s-2 solid transparent;
+
+  &.highlight,
+  &:hover {
+    --context-hover-color: var(--layer-row-foreground-color-hover);
+    --context-hover-opacity: deprecated.$op-10;
+    background-color: var(--layer-row-background-color-hover);
+    color: var(--layer-row-foreground-color-hover);
+    box-shadow: deprecated.$s-16 deprecated.$s-0 deprecated.$s-0 deprecated.$s-0
+      var(--layer-row-background-color-hover);
+    &.hidden {
+      opacity: deprecated.$op-10;
+    }
+  }
+
+  &.selected {
+    background-color: var(--layer-row-background-color-selected);
+    box-shadow: deprecated.$s-16 deprecated.$s-0 deprecated.$s-0 deprecated.$s-0
+      var(--layer-row-background-color-selected);
+  }
+
+  &.selected.highlight,
+  &.selected:hover {
+    background-color: var(--layer-row-background-color-selected);
+  }
+
+  .parent-selected & {
+    background-color: var(--layer-child-row-background-color);
+    box-shadow: deprecated.$s-16 deprecated.$s-0 deprecated.$s-0 deprecated.$s-0
+      var(--layer-child-row-background-color);
+  }
+
+  .parent-selected &.highlight,
+  .parent-selected &:hover {
+    background-color: var(--layer-row-background-color-hover);
+    box-shadow: deprecated.$s-16 deprecated.$s-0 deprecated.$s-0 deprecated.$s-0
+      var(--layer-row-background-color-hover);
+  }
+
+  &.dnd-over-bot {
+    border-bottom: deprecated.$s-2 solid var(--layer-row-foreground-color-hover);
+  }
+  &.dnd-over-top {
+    border-top: deprecated.$s-2 solid var(--layer-row-foreground-color-hover);
+  }
+  &.dnd-over {
+    border: deprecated.$s-2 solid var(--layer-row-foreground-color-hover);
+  }
+}
+
+.element-children {
+  .layer-row.highlight &,
+  .layer-row:hover & {
+    background-color: var(--layer-row-background-color-selected);
+    box-shadow: deprecated.$s-16 deprecated.$s-0 deprecated.$s-0 deprecated.$s-0
+      var(--layer-row-background-color-selected);
+  }
+  .layer-row.type-comp & {
+    color: var(--layer-row-component-foreground-color);
+  }
+  .layer-row.selected & {
+    background-color: transparent;
+    color: var(--layer-row-foreground-color-selected);
+  }
+}
+
+.element-list-body {
+  align-items: center;
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  column-gap: deprecated.$s-4;
+  height: deprecated.$s-32;
+  width: calc(100% - (var(--depth) * var(--layer-indentation-size)));
+  cursor: pointer;
+
+  &.filtered {
+    width: calc(100% - deprecated.$s-12);
+  }
+}
+
+.element-actions {
+  display: none;
+  height: 100%;
+  display: flex;
+  align-items: end;
+
+  &.selected {
+    display: flex;
+  }
+  .layer-row.highlight &,
+  .layer-row:hover & {
+    display: flex;
+  }
+}
+
+.button-content {
+  display: flex;
+  height: 100%;
+}
+
+.icon-shape {
+  @include deprecated.flexCenter;
+  @include deprecated.buttonStyle;
+  position: relative;
+  justify-self: flex-end;
+  width: deprecated.$s-16;
+  height: 100%;
+  width: deprecated.$s-24;
+  padding-inline-start: deprecated.$s-4;
+  color: var(--icon-foreground);
+  .layer-row.selected & {
+    color: var(--layer-row-foreground-color-selected);
+  }
+  .layer-row.type-comp & {
+    color: var(--layer-row-component-foreground-color);
+  }
+  .inverse & {
+    transform: rotate(-90deg);
+  }
+  .layer-row.hidden & {
+    opacity: deprecated.$op-7;
+  }
+  .layer-row.highlight &,
+  .layer-row:hover & {
+    opacity: deprecated.$op-10;
+    svg {
+      stroke: var(--layer-row-foreground-color-hover);
+    }
+  }
+}
+
+.absolute {
+  position: absolute;
+  background-color: var(--layer-row-foreground-color);
+  opacity: deprecated.$op-4;
+  width: deprecated.$s-12;
+  height: deprecated.$s-12;
+  border-radius: deprecated.$br-2;
+
+  .layer-row.hidden & {
+    opacity: deprecated.$op-1;
+  }
+  .layer-row.type-comp & {
+    background-color: var(--layer-row-component-foreground-color);
+  }
+  .layer-row.highlight &,
+  .layer-row:hover & {
+    opacity: deprecated.$op-4;
+    background-color: var(--layer-row-foreground-color-hover);
+  }
+  .layer-row.selected & {
+    background-color: var(--layer-row-foreground-color-selected);
+  }
+}
+
+.toggle-content {
+  @include deprecated.buttonStyle;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  align-items: center;
+  height: 100%;
+  width: deprecated.$s-24;
+  padding-inline-start: deprecated.$s-8;
+
+  svg {
+    @extend .button-icon-small;
+    stroke: var(--icon-foreground);
+
+    .layer-row.hidden & {
+      opacity: deprecated.$op-7;
+    }
+    .layer-row.selected & {
+      stroke: var(--layer-row-foreground-color-selected);
+    }
+    .layer-row.type-comp & {
+      stroke: var(--layer-row-component-foreground-color);
+    }
+    .layer-row.highlight &,
+    .layer-row:hover & {
+      opacity: deprecated.$op-10;
+      stroke: var(--layer-row-foreground-color-hover);
+    }
+  }
+
+  .layer-row.selected & {
+    background-color: var(--layer-row-background-color-selected);
+  }
+  &.inverse svg {
+    transform: rotate(90deg);
+  }
+}
+
+.toggle-element,
+.block-element {
+  @include deprecated.buttonStyle;
+  @include deprecated.flexCenter;
+  height: 100%;
+  width: deprecated.$s-24;
+  margin: 0;
+  display: none;
+
+  svg {
+    @extend .button-icon-small;
+    stroke: var(--icon-foreground);
+
+    .layer-row.hidden & {
+      opacity: deprecated.$op-7;
+    }
+    .type-comp & {
+      stroke: var(--layer-row-component-foreground-color);
+    }
+  }
+
+  .element-actions.selected & {
+    display: flex;
+    opacity: deprecated.$op-0;
+
+    &.selected {
+      opacity: deprecated.$op-10;
+    }
+  }
+
+  .layer-row:hover .element-actions.selected & {
+    opacity: deprecated.$op-10;
+  }
+
+  .layer-row.highlight &,
+  .layer-row:hover & {
+    display: flex;
+    svg {
+      opacity: deprecated.$op-10;
+      stroke: var(--layer-row-foreground-color-hover);
+    }
+  }
+  .layer-row.selected & {
+    display: flex;
+    svg {
+      stroke: var(--layer-row-foreground-color-selected);
+    }
+  }
+}
+
+:global(.sticky) {
+  position: sticky;
+  top: deprecated.$s-0;
+  z-index: deprecated.$z-index-4;
+}
+
+.tab-indentation {
+  display: block;
+  height: deprecated.$s-16;
+  min-width: calc(var(--depth) * var(--layer-indentation-size));
+}
+.filtered {
+  min-width: deprecated.$s-12;
+}

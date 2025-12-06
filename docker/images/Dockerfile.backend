@@ -1,0 +1,135 @@
+FROM ubuntu:24.04 AS build
+LABEL maintainer="Koda <docker@koda.app>"
+
+ENV LANG='C.UTF-8' \
+    LC_ALL='C.UTF-8' \
+    JAVA_HOME="/opt/jdk" \
+    DEBIAN_FRONTEND=noninteractive \
+    NODE_VERSION=v22.21.1 \
+    TZ=Etc/UTC
+
+RUN set -ex; \
+    apt-get -qq update; \
+    apt-get -qq upgrade; \
+    apt-get -qqy --no-install-recommends install \
+        binutils \
+        ca-certificates \
+        curl \
+    ; \
+    rm -rf /var/lib/apt/lists/*
+
+RUN set -eux; \
+    ARCH="$(dpkg --print-architecture)"; \
+    case "${ARCH}" in \
+       aarch64|arm64) \
+         OPENSSL_ARCH='linux-aarch64'; \
+         BINARY_URL="https://nodejs.org/dist/${NODE_VERSION}/node-${NODE_VERSION}-linux-arm64.tar.gz"; \
+         ;; \
+       amd64|x86_64) \
+         OPENSSL_ARCH='linux-x86_64'; \
+         BINARY_URL="https://nodejs.org/dist/${NODE_VERSION}/node-${NODE_VERSION}-linux-x64.tar.gz"; \
+         ;; \
+       *) \
+         echo "Unsupported arch: ${ARCH}"; \
+         exit 1; \
+         ;; \
+    esac; \
+    curl -LfsSo /tmp/nodejs.tar.gz ${BINARY_URL}; \
+    mkdir -p /opt/node; \
+    cd /opt/node; \
+    tar -xf /tmp/nodejs.tar.gz --strip-components=1; \
+    chown -R root /opt/node; \
+    find /opt/node/include/node/openssl/archs -mindepth 1 -maxdepth 1 ! -name "$OPENSSL_ARCH" -exec rm -rf {} \; ; \
+    rm -rf /tmp/nodejs.tar.gz;
+
+RUN set -eux; \
+    ARCH="$(dpkg --print-architecture)"; \
+    case "${ARCH}" in \
+       aarch64|arm64) \
+         ESUM='8c5321f16d9f1d8149f83e4e9ff8ca5d9e94320b92d205e6db42a604de3d1140'; \
+         BINARY_URL='https://cdn.azul.com/zulu/bin/zulu25.30.17-ca-jdk25.0.1-linux_aarch64.tar.gz'; \
+         ;; \
+       amd64|x86_64) \
+         ESUM='471b3e62bdffaed27e37005d842d8639f10d244ccce1c7cdebf7abce06c8313e'; \
+         BINARY_URL='https://cdn.azul.com/zulu/bin/zulu25.30.17-ca-jdk25.0.1-linux_x64.tar.gz'; \
+         ;; \
+       *) \
+         echo "Unsupported arch: ${ARCH}"; \
+         exit 1; \
+         ;; \
+    esac; \
+    curl -LfsSo /tmp/openjdk.tar.gz ${BINARY_URL}; \
+    echo "${ESUM} */tmp/openjdk.tar.gz" | sha256sum -c -; \
+    mkdir -p /opt/jdk; \
+    cd /opt/jdk; \
+    tar -xf /tmp/openjdk.tar.gz --strip-components=1; \
+    rm -rf /tmp/openjdk.tar.gz; \
+    /opt/jdk/bin/jlink \
+       --no-header-files \
+       --no-man-pages \
+       --strip-debug \
+       --add-modules java.base,jdk.management.agent,java.se,jdk.compiler,jdk.javadoc,jdk.attach,jdk.unsupported \
+       --output /opt/jre;
+
+FROM ubuntu:24.04 AS image
+LABEL maintainer="Koda <docker@koda.app>"
+
+ENV LANG='C.UTF-8' \
+    LC_ALL='C.UTF-8' \
+    JAVA_HOME="/opt/jre" \
+    PATH=/opt/jre/bin:/opt/node/bin:/opt/imagick/bin:$PATH \
+    DEBIAN_FRONTEND=noninteractive \
+    TZ=Etc/UTC
+
+RUN set -ex; \
+    useradd -U -M -u 1001 -s /bin/false -d /opt/koda koda; \
+    apt-get -qq update; \
+    apt-get -qq upgrade; \
+    apt-get -qqy --no-install-recommends install \
+        ca-certificates \
+        curl \
+        fontconfig \
+        fontforge \
+        libfontconfig1 \
+        libfreetype6 \
+        libglib2.0-0 \
+        libgomp1 \
+        libheif1 \
+        libjpeg-turbo8 \
+        liblcms2-2 \
+        libopenexr-3-1-30 \
+        libopenjp2-7 \
+        libpng16-16 \
+        librsvg2-2 \
+        libtiff6 \
+        libwebp7 \
+        libwebpdemux2 \
+        libwebpmux3 \
+        libxml2 \
+        libzip4t64 \
+        libzstd1 \
+        python3 \
+        python3-tabulate \
+        tzdata \
+        woff-tools \
+        woff2 \
+    ; \
+    find tmp/usr/share/zoneinfo/* -type d ! -name 'Etc' |xargs rm -rf; \
+    rm -rf /var/lib /var/cache; \
+    rm -rf /usr/include; \
+    mkdir -p /opt/data/assets; \
+    mkdir -p /opt/koda; \
+    chown -R koda:koda /opt/koda; \
+    chown -R koda:koda /opt/data; \
+    rm -rf /var/lib/apt/lists/*;
+
+COPY --from=build /opt/jre /opt/jre
+COPY --from=build /opt/node /opt/node
+COPY --from=kodaapp/imagemagick:7.1.2-0 /opt/imagick /opt/imagick
+
+ARG BUNDLE_PATH="./bundle-backend/"
+COPY --chown=koda:koda $BUNDLE_PATH /opt/koda/backend/
+
+USER koda:koda
+WORKDIR /opt/koda/backend
+CMD ["/bin/bash", "run.sh"]

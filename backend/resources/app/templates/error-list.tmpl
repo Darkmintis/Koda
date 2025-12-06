@@ -1,0 +1,27 @@
+{% extends "app/templates/base.tmpl" %}
+
+{% block title %}
+koda - error list
+{% endblock %}
+
+{% block content %}
+<nav>
+  <div class="title">
+    <h1>Error reports (last 200)
+      <a href="/dbg">[GO BACK]</a>
+    </h1>
+  </div>
+</nav>
+<main class="horizontal-list">
+  <ul>
+    {% for item in items %}
+      <li>
+        <a class="date" href="/dbg/error/{{item.id}}">{{item.created-at}}</a>
+        <a class="hint" href="/dbg/error/{{item.id}}">
+          <span class="title">{{item.hint|abbreviate:150}}</span>
+        </a>
+      </li>
+    {% endfor %}
+  </ul>
+</main>
+{% endblock %}

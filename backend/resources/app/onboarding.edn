@@ -1,0 +1,45 @@
+[{:id "tokens-starter-kit"
+  :name "Design tokens starter kit"
+  :file-uri "https://github.com/koda/koda-files/raw/refs/heads/main/Tokens%20starter%20kit.koda"}
+ {:id "koda-design-system"
+  :name "Koda Design System | Pencil"
+  :file-uri "https://github.com/koda/koda-files/raw/refs/heads/main/koda-app.koda"}
+ {:id "wireframing-kit"
+  :name "Wireframe library"
+  :file-uri "https://github.com/koda/koda-files/raw/refs/heads/main/Wireframing%20kit%20v1.1.koda"}
+ {:id "prototype-examples"
+  :name "Prototype template"
+  :file-uri "https://github.com/koda/koda-files/raw/refs/heads/main/Prototype%20examples%20v1.1.koda"}
+ {:id "plants-app"
+  :name "UI mockup example"
+  :file-uri "https://github.com/koda/koda-files/raw/main/Plants-app.koda"}
+ {:id "tutorial-for-beginners"
+  :name "Tutorial for beginners"
+  :file-uri "https://github.com/koda/koda-files/raw/main/tutorial-for-beginners.koda"}
+ {:id "lucide-icons"
+  :name "Lucide Icons"
+  :file-uri "https://github.com/koda/koda-files/raw/main/Lucide-icons.koda"}
+ {:id "font-awesome"
+  :name "Font Awesome"
+  :file-uri "https://github.com/koda/koda-files/raw/main/FontAwesome.koda"}
+ {:id "black-white-mobile-templates"
+  :name "Black & White Mobile Templates"
+  :file-uri "https://github.com/koda/koda-files/raw/main/Black-&-White-Mobile-Templates.koda"}
+ {:id "avataaars"
+  :name "Avataaars"
+  :file-uri "https://github.com/koda/koda-files/raw/main/Avataaars-by-Pablo-Stanley.koda"}
+ {:id "ux-notes"
+  :name "UX Notes"
+  :file-uri "https://github.com/koda/koda-files/raw/main/UX-Notes.koda"}
+ {:id "whiteboarding-kit"
+  :name "Whiteboarding Kit"
+  :file-uri "https://github.com/koda/koda-files/raw/main/Whiteboarding-mapping-kit.koda"}
+ {:id "open-color-scheme"
+  :name "Open Color Scheme"
+  :file-uri "https://github.com/koda/koda-files/raw/main/Open%20Color%20Scheme%20(v1.9.1).koda"}
+ {:id "flex-layout-playground"
+  :name "Flex Layout Playground"
+  :file-uri "https://github.com/koda/koda-files/raw/refs/heads/main/Flex%20Layout%20Playground%20v2.0.koda"}
+ {:id "welcome"
+  :name "Welcome"
+  :file-uri "https://github.com/koda/koda-files/raw/main/welcome.koda"}]

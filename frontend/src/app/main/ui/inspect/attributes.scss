@@ -1,0 +1,25 @@
+// This Source Code Form is subject to the terms of the Mozilla Public
+// License, v. 2.0. If a copy of the MPL was not distributed with this
+// file, You can obtain one at http://mozilla.org/MPL/2.0/.
+//
+// Copyright (c) KALEIDOS INC
+
+@use "ds/_sizes.scss" as *;
+@use "ds/_utils.scss" as *;
+
+.element-options {
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-l);
+  width: 100%;
+  height: calc(100vh - px2rem(128)); // TODO: Fix this hardcoded value
+  padding-top: var(--sp-s);
+  overflow-y: auto;
+  overflow-x: hidden;
+  scrollbar-gutter: stable;
+}
+
+.workspace-element-options {
+  height: calc(100vh - px2rem(200)); // TODO: Fix this hardcoded value
+  padding-inline: var(--sp-m);
+}

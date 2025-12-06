@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="x-ua-compatible" content="ie=edge" />
+    <title>Koda - Design Freedom for Teams</title>
+
+    <meta name="description" content="The open-source solution for design and prototyping.">
+    <meta property="og:locale" content="en_US">
+    <meta property="og:title" content="Koda | Design Freedom for Teams">
+    <meta property="og:description" content="The open-source solution for design and prototyping">
+    <meta property="og:image" content="https://koda.app/images/workspace-ui.jpg">
+    <meta name="twitter:title" content="Koda | Design Freedom for Teams">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:description" content="The open-source solution for design and prototyping">
+    <meta name="twitter:image" content="https://koda.app/images/workspace-ui.jpg">
+    <meta name="twitter:site" content="@kodaapp">
+    <meta name="twitter:creator" content="@kodaapp">
+    <meta name="theme-color" content="#FFFFFF" media="(prefers-color-scheme: light)">
+    <link id="theme" href="css/main.css?ts={{& ts}}" rel="stylesheet" type="text/css" />
+    {{#isDebug}}
+    <link href="css/debug.css?ts={{& ts}}" rel="stylesheet" type="text/css" />
+    {{/isDebug}}
+
+    <link rel="icon" href="images/favicon.png" />
+    {{# manifest}}
+    <script>window.kodaWorkerURI="{{& worker_main}}"</script>
+    <script src="{{& config}}"></script>
+    <script src="{{& polyfills}}"></script>
+    {{/manifest}}
+
+    <script type="module">
+      globalThis.kodaVersion = "%version%";
+      globalThis.kodaBuildDate = "%buildDate%";
+    </script>
+    <!--cookie-consent-->
+  </head>
+  <body>
+    {{> ../public/images/sprites/symbol/icons.svg }}
+    {{> ../public/images/sprites/symbol/cursors.svg }}
+    {{> ../public/images/sprites/assets.svg }}
+    <div id="app"></div>
+    <section id="modal"></section>
+
+    {{# manifest}}
+    <script type="module" src="{{& libs}}"></script>
+    <script type="module">
+      import { init } from "{{& main}}";
+      init();
+    </script>
+    {{/manifest}}
+  </body>
+</html>

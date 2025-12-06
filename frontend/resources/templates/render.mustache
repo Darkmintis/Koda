@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="x-ua-compatible" content="ie=edge" />
+    <title>Koda - Render</title>
+    <link rel="icon" href="images/favicon.png" />
+
+    <script>
+      window.kodaVersion = "%version%";
+    </script>
+
+    {{# manifest}}
+    <script src="{{& config}}"></script>
+    <script src="{{& polyfills}}"></script>
+    {{/manifest}}
+  </head>
+  <body>
+    <div id="app"></div>
+    {{# manifest}}
+    <script type="module" src="{{& libs}}"></script>
+    <script type="module">
+      import { init } from "{{& render}}";
+      init();
+    </script>
+    {{/manifest}}
+  </body>
+</html>

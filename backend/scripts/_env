@@ -1,0 +1,84 @@
+#!/usr/bin/env bash
+
+export KODA_MANAGEMENT_API_KEY=super-secret-management-api-key
+export KODA_SECRET_KEY=super-secret-devenv-key
+export KODA_HOST=devenv
+export KODA_PUBLIC_URI=https://localhost:3449
+
+export KODA_FLAGS="\
+       $KODA_FLAGS \
+       enable-login-with-password
+       disable-login-with-ldap \
+       disable-login-with-oidc \
+       disable-login-with-google \
+       disable-login-with-github \
+       disable-login-with-gitlab \
+       enable-backend-worker \
+       enable-backend-asserts \
+       disable-feature-fdata-pointer-map \
+       enable-feature-fdata-objects-map \
+       enable-audit-log \
+       enable-transit-readable-response \
+       enable-demo-users \
+       enable-user-feedback \
+       disable-secure-session-cookies \
+       enable-smtp \
+       enable-prepl-server \
+       enable-urepl-server \
+       enable-rpc-climit \
+       enable-rpc-rlimit \
+       enable-quotes \
+       enable-soft-rpc-rlimit \
+       enable-auto-file-snapshot \
+       enable-webhooks \
+       enable-access-tokens \
+       disable-tiered-file-data-storage \
+       enable-file-validation \
+       enable-file-schema-validation \
+       enable-redis-cache \
+       enable-subscriptions";
+
+# Default deletion delay for devenv
+export KODA_DELETION_DELAY="24h"
+
+# Setup default upload media file size to 100MiB
+export KODA_MEDIA_MAX_FILE_SIZE=104857600
+
+# Setup default multipart upload size to 300MiB
+export KODA_HTTP_SERVER_MAX_MULTIPART_BODY_SIZE=314572800
+
+export KODA_USER_FEEDBACK_DESTINATION="support@example.com"
+
+export AWS_ACCESS_KEY_ID=koda-devenv
+export AWS_SECRET_ACCESS_KEY=koda-devenv
+export KODA_OBJECTS_STORAGE_BACKEND=s3
+export KODA_OBJECTS_STORAGE_S3_ENDPOINT=http://minio:9000
+export KODA_OBJECTS_STORAGE_S3_BUCKET=koda
+
+export JAVA_OPTS="\
+       -Djava.util.logging.manager=org.apache.logging.log4j.jul.LogManager \
+       -Djdk.attach.allowAttachSelf \
+       -Dlog4j2.configurationFile=log4j2-devenv.xml \
+       -Djdk.tracePinnedThreads=full \
+       -Dim4java.useV7=true \
+       -XX:+UnlockExperimentalVMOptions \
+       -XX:+UseShenandoahGC \
+       -XX:+UseCompactObjectHeaders \
+       -XX:ShenandoahGCMode=generational \
+       -XX:-OmitStackTraceInFastThrow  \
+       --sun-misc-unsafe-memory-access=allow \
+       --enable-preview \
+       --enable-native-access=ALL-UNNAMED";
+
+function setup_minio() {
+    # Initialize MINIO config
+    mc alias set koda-s3/ http://minio:9000 minioadmin minioadmin -q
+    mc admin user add koda-s3 koda-devenv koda-devenv -q
+    mc admin user info koda-s3 koda-devenv |grep -F -q "readwrite"
+    if [ "$?" = "1" ]; then
+        mc admin policy attach koda-s3 readwrite --user=koda-devenv -q
+    fi
+    mc mb koda-s3/koda -p -q
+}
+
+

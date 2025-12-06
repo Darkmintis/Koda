@@ -1,0 +1,246 @@
+// This Source Code Form is subject to the terms of the Mozilla Public
+// License, v. 2.0. If a copy of the MPL was not distributed with this
+// file, You can obtain one at http://mozilla.org/MPL/2.0/.
+//
+// Copyright (c) KALEIDOS INC
+
+@use "refactor/common-refactor.scss" as deprecated;
+@use "common/refactor/common-dashboard";
+
+.dashboard-container {
+  flex: 1 0 0;
+  width: 100%;
+  margin-right: deprecated.$s-16;
+  border-top: deprecated.$s-1 solid var(--panel-border-color);
+  overflow-y: auto;
+  padding-bottom: deprecated.$s-32;
+}
+
+.dashboard-projects {
+  user-select: none;
+  height: calc(100vh - deprecated.$s-64);
+}
+
+.with-team-hero {
+  height: calc(100vh - deprecated.$s-280);
+}
+
+.dashboard-shared {
+  width: calc(100vw - deprecated.$s-320);
+  margin-right: deprecated.$s-52;
+}
+
+.search {
+  margin-top: deprecated.$s-12;
+}
+
+.dashboard-project-row {
+  --actions-opacity: 0;
+  margin-bottom: deprecated.$s-24;
+  position: relative;
+
+  &:hover,
+  &:focus,
+  &:focus-within {
+    --actions-opacity: 1;
+  }
+}
+
+.pinned-project {
+  --actions-opacity: 1;
+}
+
+.projects-container {
+  display: grid;
+  grid-auto-rows: min-content;
+}
+
+.project {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  gap: deprecated.$s-8;
+  width: 99%;
+  max-height: deprecated.$s-40;
+  padding: deprecated.$s-8 deprecated.$s-8 deprecated.$s-8 deprecated.$s-16;
+  margin-top: deprecated.$s-16;
+  border-radius: deprecated.$br-4;
+}
+
+.project-name-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  width: 100%;
+  min-height: deprecated.$s-32;
+  margin-left: deprecated.$s-8;
+}
+
+.project-name {
+  @include deprecated.bodyLargeTypography;
+  @include deprecated.textEllipsis;
+  width: fit-content;
+  margin-right: deprecated.$s-12;
+  line-height: 0.8;
+  color: var(--title-foreground-color-hover);
+  cursor: pointer;
+  height: deprecated.$s-16;
+}
+
+.info-wrapper {
+  display: flex;
+  align-items: center;
+  gap: deprecated.$s-8;
+}
+
+.info,
+.recent-files-row-title-info {
+  @include deprecated.bodyMediumTypography;
+  color: var(--title-foreground-color);
+  @media (max-width: 760px) {
+    display: none;
+  }
+}
+
+.project-actions {
+  display: flex;
+  opacity: var(--actions-opacity);
+  margin-left: deprecated.$s-32;
+}
+
+.add-file-btn,
+.options-btn {
+  @extend .button-tertiary;
+  height: deprecated.$s-32;
+  width: deprecated.$s-32;
+  margin: 0 deprecated.$s-8;
+  padding: deprecated.$s-8;
+}
+
+.add-icon,
+.menu-icon {
+  @extend .button-icon;
+  stroke: var(--icon-foreground);
+}
+
+.grid-container {
+  width: 100%;
+  padding: 0 deprecated.$s-4;
+}
+
+.placeholder-placement {
+  margin: deprecated.$s-16 deprecated.$s-32;
+}
+
+.show-more {
+  --show-more-color: var(--button-secondary-foreground-color-rest);
+  @include deprecated.buttonStyle;
+  @include deprecated.bodyMediumTypography;
+  position: absolute;
+  top: deprecated.$s-8;
+  right: deprecated.$s-52;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  column-gap: deprecated.$s-12;
+  color: var(--show-more-color);
+
+  &:hover {
+    --show-more-color: var(--button-secondary-foreground-color-active);
+  }
+}
+
+.show-more-icon {
+  height: deprecated.$s-16;
+  width: deprecated.$s-16;
+  fill: none;
+  stroke: var(--show-more-color);
+}
+
+// Team hero
+.team-hero {
+  background-color: var(--color-background-tertiary);
+  border-radius: deprecated.$br-8;
+  border: none;
+  display: flex;
+  margin: deprecated.$s-16;
+  padding: deprecated.$s-8;
+  position: relative;
+
+  img {
+    border-radius: deprecated.$br-4;
+    height: deprecated.$s-200;
+    width: auto;
+
+    @media (max-width: 1200px) {
+      display: none;
+      width: 0;
+    }
+  }
+}
+
+.text {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  flex-grow: 1;
+  padding: deprecated.$s-20 deprecated.$s-20;
+}
+
+.title {
+  font-size: deprecated.$fs-24;
+  color: var(--color-foreground-primary);
+  font-weight: deprecated.$fw400;
+}
+
+.info {
+  flex: 1;
+  font-size: deprecated.$fs-16;
+  span {
+    color: var(--color-foreground-secondary);
+    display: block;
+  }
+  a {
+    color: var(--color-accent-primary);
+  }
+  padding: deprecated.$s-8 0;
+}
+
+.close {
+  --close-icon-foreground-color: var(--icon-foreground);
+  position: absolute;
+  top: deprecated.$s-20;
+  right: deprecated.$s-24;
+  width: deprecated.$s-24;
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+  &:hover {
+    --close-icon-foreground-color: var(--button-icon-foreground-color-selected);
+  }
+}
+
+.close-icon {
+  @extend .button-icon;
+  stroke: var(--close-icon-foreground-color);
+}
+
+.invite {
+  height: deprecated.$s-32;
+  width: deprecated.$s-180;
+}
+
+.img-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: deprecated.$s-200;
+  height: deprecated.$s-200;
+  overflow: hidden;
+  border-radius: deprecated.$br-4;
+  @media (max-width: 1200px) {
+    display: none;
+    width: 0;
+  }
+}

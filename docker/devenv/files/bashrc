@@ -1,0 +1,17 @@
+#!/usr/bin/env bash
+
+EMSDK_QUIET=1 . /opt/emsdk/emsdk_env.sh;
+
+export PATH="/home/koda/.cargo/bin:/opt/jdk/bin:/opt/utils/bin:/opt/clojure/bin:/opt/node/bin:/opt/imagick/bin:/opt/cargo/bin:$PATH"
+export CARGO_HOME="/home/koda/.cargo"
+
+alias l='ls --color -GFlh'
+alias rm='rm -r'
+alias ls='ls --color -F'
+alias lsd='ls -d *(/)'
+alias lsf='ls -h *(.)'
+
+# include .bashrc if it exists
+if [ -f "$HOME/.bashrc.local" ]; then
+    . "$HOME/.bashrc.local"
+fi

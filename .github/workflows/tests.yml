@@ -11,8 +11,7 @@ on:
       - synchronize
   push:
     branches:
-      - develop
-      - staging
+      - main
 
 concurrency:
   group: ${{ github.event.pull_request.number || github.ref }}

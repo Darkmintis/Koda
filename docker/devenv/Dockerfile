@@ -6,24 +6,26 @@ ENV LANG='C.UTF-8' \
 
 RUN set -ex; \
     apt-get -qq update; \
-    apt-get -qq upgrade; \
+    apt-get -qq -y upgrade; \
     apt-get -qqy --no-install-recommends install \
+        autoconf \
+        bash \
+        binutils \
+        build-essential \
+        ca-certificates \
+        curl \
+        git \
+        libtool \
+        pkg-config \
         python3 \
-        unzip \
         rsync \
-        wget \
         sudo \
         tmux \
+        unzip \
         vim \
-        curl \
-        bash \
-        git \
-        \
-        curl \
-        ca-certificates \
-        \
-        binutils \
-        build-essential autoconf libtool pkg-config
+        wget \
+    ; \
+    rm -rf /var/lib/apt/lists/*
 
 ################################################################################
 ## NODE SETUP
@@ -123,7 +125,7 @@ RUN set -eux; \
     rm -rf /tmp/openjdk.tar.gz;
 
 RUN set -ex; \
-    curl -LfsSo /tmp/clojure.sh https://download.clojure.org/install/linux-install-$CLOJURE_VERSION.sh; \
+    curl -LfsSo /tmp/clojure.sh "https://download.clojure.org/install/linux-install-${CLOJURE_VERSION}.sh"; \
     chmod +x /tmp/clojure.sh; \
     mkdir -p /opt/clojure; \
     /tmp/clojure.sh --prefix /opt/clojure; \
@@ -162,14 +164,16 @@ RUN set -eux; \
     wget "https://static.rust-lang.org/rustup/archive/${RUSTUP_VERSION}/${rustArch}/rustup-init"; \
     echo "${rustupSha256} *rustup-init" | sha256sum -c -; \
     chmod +x rustup-init; \
-    ./rustup-init -y --no-modify-path --profile minimal --default-toolchain $RUST_VERSION --default-host ${rustArch}; \
+    ./rustup-init -y --no-modify-path --profile minimal \
+        --default-toolchain "${RUST_VERSION}" \
+        --default-host "${rustArch}"; \
     rm rustup-init; \
     rustup component add rustfmt; \
     rustup component add clippy; \
     git clone https://github.com/emscripten-core/emsdk.git; \
     cd emsdk; \
-    ./emsdk install $EMSCRIPTEN_VERSION; \
-    ./emsdk activate $EMSCRIPTEN_VERSION; \
+    ./emsdk install "${EMSCRIPTEN_VERSION}"; \
+    ./emsdk activate "${EMSCRIPTEN_VERSION}"; \
     rustup target add wasm32-unknown-emscripten; \
     cargo install cargo-watch;
 
@@ -273,41 +277,22 @@ FROM base AS devenv-base
 RUN set -ex; \
     usermod -l koda -d /home/koda -G users -s /bin/bash ubuntu; \
     passwd koda -d; \
-    echo "koda ALL=(ALL) NOPASSWD:ALL" >> /etc/sudoers
-
-RUN set -ex; \
+    echo "koda ALL=(ALL) NOPASSWD:ALL" >> /etc/sudoers; \
     apt-get -qq update; \
     apt-get -qqy install --no-install-recommends \
-      redis-tools \
-      gnupg2 \
-      rlwrap \
       file \
-      less \
-      jq \
-      nginx \
-      \
       fontconfig \
-      woff-tools \
-      woff2 \
-      python3-tabulate \
       fontforge \
-      \
-      xvfb \
-      fonts-noto-color-emoji \
-      fonts-unifont \
-      libfontconfig1 \
-      libfontconfig-dev \
-      libfreetype6 \
-      libfreetype-dev \
-      xfonts-cyrillic \
-      xfonts-scalable \
-      fonts-liberation \
-      fonts-ipafont-gothic \
-      fonts-wqy-zenhei \
-      fonts-tlwg-loma-otf \
       fonts-freefont-ttf \
-      poppler-utils \
-      \
+      fonts-ipafont-gothic \
+      fonts-liberation \
+      fonts-noto-color-emoji \
+      fonts-tlwg-loma-otf \
+      fonts-unifont \
+      fonts-wqy-zenhei \
+      gnupg2 \
+      jq \
+      less \
       libasound2t64 \
       libatk-bridge2.0-0t64 \
       libatk1.0-0t64 \
@@ -316,11 +301,28 @@ RUN set -ex; \
       libcups2t64 \
       libdbus-1-3 \
       libdrm2 \
+      libfontconfig-dev \
+      libfontconfig1 \
+      libfreetype-dev \
+      libfreetype6 \
       libgbm1 \
+      libglib2.0-0 \
       libglib2.0-0t64 \
+      libgomp1 \
+      libheif1 \
+      libjpeg-turbo8 \
+      liblcms2-2 \
       libnspr4 \
       libnss3 \
+      libopenexr-3-1-30 \
+      libopenjp2-7 \
       libpango-1.0-0 \
+      libpng16-16 \
+      librsvg2-2 \
+      libtiff6 \
+      libwebp7 \
+      libwebpdemux2 \
+      libwebpmux3 \
       libx11-6 \
       libxcb1 \
       libxcomposite1 \
@@ -328,36 +330,28 @@ RUN set -ex; \
       libxext6 \
       libxfixes3 \
       libxkbcommon0 \
-      libxrandr2 \
-      \
-      libpng16-16 \
-      libjpeg-turbo8 \
-      libtiff6 \
-      libwebp7 \
-      libopenexr-3-1-30 \
-      libfreetype6 \
-      libfontconfig1 \
-      libglib2.0-0 \
       libxml2 \
-      liblcms2-2 \
-      libheif1 \
-      libopenjp2-7 \
-      libzstd1 \
-      librsvg2-2 \
-      libgomp1 \
-      libwebpmux3 \
-      libwebpdemux2 \
+      libxrandr2 \
       libzip4t64 \
+      libzstd1 \
+      nginx \
+      poppler-utils \
+      python3-tabulate \
+      redis-tools \
+      rlwrap \
+      woff-tools \
+      woff2 \
+      xfonts-cyrillic \
+      xfonts-scalable \
+      xvfb \
     ; \
-    rm -rf /var/lib/apt/lists/*;
-
-RUN set -ex; \
+    rm -rf /var/lib/apt/lists/*; \
     install -d /usr/share/postgresql-common/pgdg; \
     curl -o /usr/share/postgresql-common/pgdg/apt.postgresql.org.asc --fail https://www.postgresql.org/media/keys/ACCC4CF8.asc; \
     echo "deb [signed-by=/usr/share/postgresql-common/pgdg/apt.postgresql.org.asc] https://apt.postgresql.org/pub/repos/apt noble-pgdg main" >> /etc/apt/sources.list.d/postgresql.list; \
     apt-get -qq update; \
     apt-get -qqy install postgresql-client-16; \
-    rm -rf /var/lib/apt/lists/*;
+    rm -rf /var/lib/apt/lists/*
 
 
 ################################################################################
@@ -375,7 +369,7 @@ ENV LANG='C.UTF-8' \
     RUSTUP_HOME="/opt/rustup" \
     PATH="/opt/jdk/bin:/opt/utils/bin:/opt/clojure/bin:/opt/node/bin:/opt/imagick/bin:/opt/cargo/bin:$PATH"
 
-COPY --from=kodaapp/imagemagick:7.1.2-0 /opt/imagick /opt/imagick
+COPY --from=penpotapp/imagemagick:7.1.2-0 /opt/imagick /opt/imagick
 COPY --from=setup-jvm /opt/jdk /opt/jdk
 COPY --from=setup-jvm /opt/clojure /opt/clojure
 COPY --from=setup-node /opt/node /opt/node

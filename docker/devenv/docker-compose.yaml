@@ -14,7 +14,7 @@ volumes:
 services:
   main:
     privileged: true
-    image: "kodaapp/devenv:latest"
+    image: "penpotapp/devenv:latest"
     build:
       context: "."
     container_name: "koda-devenv-main"

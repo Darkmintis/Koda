@@ -133,10 +133,20 @@
          (fn [event]
            (dom/prevent-default event)
            (swap! state* assoc :status :generating)
-           ;; Trigger code generation
-           (st/emit! (cexp/generate-code {:file-id file-id
-                                          :page-id page-id
-                                          :options options}))))
+           ;; Trigger code generation with callbacks
+           (st/emit! (cexp/generate-code 
+                      {:file-id file-id
+                       :page-id page-id
+                       :options options
+                       :on-success (fn [result]
+                                     (swap! state* assoc 
+                                            :status :complete
+                                            :result result))
+                       :on-error (fn [error]
+                                   (swap! state* assoc 
+                                          :status :error
+                                          :error (or (:message error) 
+                                                     "Code generation failed")))}))))
 
         on-download
         (mf/use-fn
@@ -144,8 +154,9 @@
          (fn [event]
            (dom/prevent-default event)
            (when-let [result (:result state)]
-             (st/emit! (cexp/download-generated-code {:generation-id (:id result)
-                                                      :filename "koda-generated-code.zip"})))))]
+             (st/emit! (cexp/download-generated-code 
+                        {:download-url (:download-url result)
+                         :filename (or (:filename result) "koda-generated-code.zip")})))))]
 
     [:div {:class (stl/css :modal-overlay)}
      [:div {:class (stl/css :modal-container :code-generation-modal)}

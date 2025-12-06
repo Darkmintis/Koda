@@ -21,8 +21,6 @@ test("create context with single file", () => {
 
   const internalState = context.getInternalState();
 
-  // console.log(internalState);
-
   assert.ok(internalState.files);
   assert.equal(typeof internalState.files, "object");
   assert.equal(typeof internalState.currentFileId, "string");

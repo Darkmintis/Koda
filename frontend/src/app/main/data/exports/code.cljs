@@ -12,6 +12,7 @@
    [app.main.data.event :as ev]
    [app.main.data.modal :as modal]
    [app.main.repo :as rp]
+   [app.util.dom :as dom]
    [app.util.sse :as sse]
    [beicon.v2.core :as rx]
    [potok.v2.core :as ptk]))
@@ -53,7 +54,7 @@
 
 (defn generate-code
   "Generate code from design with the specified options"
-  [{:keys [file-id page-id options] :as params}]
+  [{:keys [file-id page-id options on-success on-error] :as params}]
   (ptk/reify ::generate-code
     ptk/WatchEvent
     (watch [_ state _]
@@ -75,32 +76,30 @@
                            :framework (:framework merged-options)
                            :css-framework (:css-framework merged-options)}))
          ;; Call the backend API for code generation
-         (->> (rp/cmd! :generate-code {:file-id file-id
-                                       :page-id page-id
-                                       :options merged-options})
-              (rx/map (fn [result]
-                        {:type :code-generation-complete
-                         :result result}))
+         (->> (rp/cmd! ::sse/generate-code {:file-id file-id
+                                            :page-id page-id
+                                            :options merged-options})
+              (rx/filter sse/end-of-stream?)
+              (rx/map sse/get-payload)
+              (rx/tap (fn [result]
+                        (when on-success (on-success result))))
               (rx/catch (fn [cause]
                           (let [error (ex-data cause)]
+                            (when on-error (on-error error))
                             (rx/of {:type :code-generation-error
                                     :error error}))))))))))
 
 (defn download-generated-code
   "Download the generated code as a zip file"
-  [{:keys [generation-id filename] :as params}]
+  [{:keys [download-url filename] :as params}]
   (ptk/reify ::download-generated-code
-    ptk/WatchEvent
-    (watch [_ _ _]
-      (->> (rp/cmd! :download-generated-code {:generation-id generation-id})
-           (rx/map (fn [uri]
-                     {:type :download-ready
-                      :uri uri
-                      :filename (or filename "koda-generated-code.zip")}))
-           (rx/catch (fn [cause]
-                       (let [error (ex-data cause)]
-                         (rx/of {:type :download-error
-                                 :error error}))))))))
+    ptk/EffectEvent
+    (effect [_ state _]
+      ;; Trigger browser download
+      (dom/trigger-download-uri 
+       (or filename "koda-generated-code.zip")
+       "application/zip"
+       download-url))))
 
 (defn export-design-json
   "Export the current design as JSON for code generation"
@@ -114,3 +113,4 @@
                 :data {:file file
                        :page page
                        :objects (get page :objects)}})))))
+

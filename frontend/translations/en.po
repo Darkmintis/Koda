@@ -607,6 +607,54 @@ msgstr "Include shared library assets in file libraries"
 msgid "dashboard.export.title"
 msgstr "Export files"
 
+#: src/app/main/ui/exports/code.cljs
+msgid "dashboard.generate-code"
+msgstr "Generate Code"
+
+#: src/app/main/ui/exports/code.cljs
+msgid "dashboard.generate-code.title"
+msgstr "Generate Code"
+
+#: src/app/main/ui/exports/code.cljs
+msgid "dashboard.generate-code.description"
+msgstr "Generate production-ready code from your design. Select your preferred framework and options below."
+
+#: src/app/main/ui/exports/code.cljs
+msgid "dashboard.generate-code.framework"
+msgstr "Framework"
+
+#: src/app/main/ui/exports/code.cljs
+msgid "dashboard.generate-code.css-framework"
+msgstr "CSS Framework"
+
+#: src/app/main/ui/exports/code.cljs
+msgid "dashboard.generate-code.options"
+msgstr "Options"
+
+#: src/app/main/ui/exports/code.cljs
+msgid "dashboard.generate-code.generating"
+msgstr "Generating your code..."
+
+#: src/app/main/ui/exports/code.cljs
+msgid "dashboard.generate-code.generating-description"
+msgstr "Koda AI is analyzing your design and generating production-ready code. This may take a moment."
+
+#: src/app/main/ui/exports/code.cljs
+msgid "dashboard.generate-code.success"
+msgstr "Code Generated Successfully!"
+
+#: src/app/main/ui/exports/code.cljs
+msgid "dashboard.generate-code.success-description"
+msgstr "Your code is ready to download. The package includes components, styles, and routing based on your design."
+
+#: src/app/main/ui/exports/code.cljs
+msgid "dashboard.generate-code.download"
+msgstr "Download Code"
+
+#: src/app/main/ui/exports/code.cljs
+msgid "dashboard.generate-code.error"
+msgstr "Generation Failed"
+
 #: src/app/main/ui/workspace/sidebar/options/menus/typography.cljs:317
 msgid "dashboard.fonts.deleted-placeholder"
 msgstr "Missing font"

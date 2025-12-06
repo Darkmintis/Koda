@@ -1,0 +1,58 @@
+# Stage 1: Build the backend
+FROM clojure:temurin-21-tools-deps AS builder
+
+WORKDIR /app
+
+# Copy dependency files first for caching
+COPY deps.edn /app/
+COPY backend/deps.edn /app/backend/
+COPY common/deps.edn /app/common/
+
+# Download dependencies
+RUN clojure -A:backend -P
+
+# Copy source code
+COPY common/src /app/common/src
+COPY backend/src /app/backend/src
+COPY backend/resources /app/backend/resources
+COPY backend/build.clj /app/backend/
+
+# Build the uberjar
+WORKDIR /app/backend
+RUN clojure -T:build uberjar
+
+# Stage 2: Runtime image
+FROM eclipse-temurin:21-jre-alpine
+
+WORKDIR /app
+
+# Install required packages and create non-root user
+RUN apk add --no-cache \
+    curl \
+    fontconfig \
+    imagemagick \
+    ttf-dejavu && \
+    addgroup -g 1000 koda && \
+    adduser -u 1000 -G koda -s /bin/sh -D koda
+
+# Copy the built jar
+COPY --from=builder /app/backend/target/*.jar /app/koda-backend.jar
+
+# Copy resources
+COPY backend/resources /app/resources
+
+# Set ownership
+RUN chown -R koda:koda /app
+
+USER koda
+
+# Environment defaults
+ENV JAVA_OPTS="-Xms512m -Xmx2048m -XX:+UseG1GC -XX:+UseStringDeduplication"
+ENV APP_HTTP_SERVER_PORT=6060
+
+EXPOSE 6060
+
+HEALTHCHECK --interval=30s --timeout=10s --start-period=60s --retries=3 \
+    CMD curl -f http://localhost:6060/api/health || exit 1
+
+CMD ["sh", "-c", "java $JAVA_OPTS -jar /app/koda-backend.jar"]

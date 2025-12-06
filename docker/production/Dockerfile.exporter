@@ -1,0 +1,70 @@
+# Stage 1: Build the exporter
+FROM node:20-alpine AS builder
+
+WORKDIR /app
+
+# Install build dependencies
+RUN apk add --no-cache \
+    g++ \
+    git \
+    make \
+    python3
+
+# Copy package files
+COPY package.json /app/
+COPY exporter/package.json /app/exporter/
+COPY common/package.json /app/common/
+
+# Install dependencies
+RUN npm install
+
+# Copy source code
+COPY exporter /app/exporter
+COPY common /app/common
+COPY deps.edn /app/
+
+# Build exporter
+WORKDIR /app/exporter
+RUN npm run build
+
+# Stage 2: Runtime
+FROM node:20-alpine
+
+WORKDIR /app
+
+# Install runtime dependencies
+RUN apk add --no-cache \
+    ca-certificates \
+    chromium \
+    freetype \
+    harfbuzz \
+    nss \
+    ttf-freefont
+
+# Set Puppeteer to use installed Chromium
+ENV PUPPETEER_SKIP_CHROMIUM_DOWNLOAD=true \
+    PUPPETEER_EXECUTABLE_PATH=/usr/bin/chromium-browser
+
+# Create non-root user
+RUN addgroup -g 1000 koda && \
+    adduser -u 1000 -G koda -s /bin/sh -D koda
+
+# Copy built exporter
+COPY --from=builder /app/exporter/target /app/target
+COPY --from=builder /app/node_modules /app/node_modules
+COPY exporter/package.json /app/
+
+# Set ownership
+RUN chown -R koda:koda /app
+
+USER koda
+
+ENV NODE_ENV=production
+ENV PORT=6061
+
+EXPOSE 6061
+
+HEALTHCHECK --interval=30s --timeout=10s --start-period=30s --retries=3 \
+    CMD wget --quiet --tries=1 --spider http://localhost:6061/health || exit 1
+
+CMD ["node", "target/app.js"]

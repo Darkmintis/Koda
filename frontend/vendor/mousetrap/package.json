@@ -1,5 +1,5 @@
 {
-  "name": "@koda/mousetrap",
+  "name": "@penpot/mousetrap",
   "version": "1.6.5",
   "description": "Simple library for handling keyboard shortcuts",
   "main": "index.js",

@@ -1,14 +1,14 @@
 {
-  "name": "@koda/draft-js",
+  "name": "@penpot/draft-js",
   "version": "1.0.0",
-  "description": "Koda Draft-JS Wrapper",
+  "description": "Penpot Draft-JS Wrapper",
   "main": "index.js",
   "type": "module",
   "packageManager": "yarn@4.3.1",
   "author": "Andrey Antukh",
   "license": "MPL-2.0",
   "dependencies": {
-    "draft-js": "koda/draft-js.git#4a99b2a6020b2af97f6dc5fa1b4275ec16b559a0"
+    "draft-js": "penpot/draft-js.git#4a99b2a6020b2af97f6dc5fa1b4275ec16b559a0"
   },
   "peerDependencies": {
     "react": ">=0.17.0",

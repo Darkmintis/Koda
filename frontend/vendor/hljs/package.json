@@ -1,7 +1,7 @@
 {
-  "name": "@koda/hljs",
+  "name": "@penpot/hljs",
   "version": "1.0.0",
-  "description": "Koda Hightlight.js ESM wrapper",
+  "description": "Penpot Hightlight.js ESM wrapper",
   "main": "index.js",
   "packageManager": "yarn@4.3.1",
   "author": "Andrey Antukh",

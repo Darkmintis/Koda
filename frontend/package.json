@@ -102,12 +102,12 @@
     "workerpool": "^9.3.2"
   },
   "dependencies": {
-    "@koda/draft-js": "portal:./vendor/draft-js",
-    "@koda/hljs": "portal:./vendor/hljs",
-    "@koda/mousetrap": "portal:./vendor/mousetrap",
-    "@koda/plugins-runtime": "1.3.2",
-    "@koda/svgo": "koda/svgo#v3.1",
-    "@koda/text-editor": "portal:./text-editor",
+    "@penpot/draft-js": "portal:./vendor/draft-js",
+    "@penpot/hljs": "portal:./vendor/hljs",
+    "@penpot/mousetrap": "portal:./vendor/mousetrap",
+    "@penpot/plugins-runtime": "1.3.2",
+    "@penpot/svgo": "penpot/svgo#v3.1",
+    "@penpot/text-editor": "portal:./text-editor",
     "@tokens-studio/sd-transforms": "1.2.11",
     "@zip.js/zip.js": "patch:@zip.js/zip.js@npm%3A2.7.60#~/.yarn/patches/@zip.js-zip.js-npm-2.7.60-b6b814410b.patch",
     "compression": "^1.8.1",

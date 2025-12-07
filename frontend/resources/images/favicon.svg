@@ -1,5 +1,5 @@
-<svg title="Koda logo icon" alt="Koda logo icon" viewBox="0 0 64 64" width="64" height="64" xmlns="http://www.w3.org/2000/svg">
-  <!-- Koda Icon: << double chevron arrow (half-cut K shape) -->
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="64" height="64">
+  <!-- Koda Favicon: << double chevron arrow -->
   <!-- Left chevron - Blue -->
   <path d="M30 12 L10 32 L30 52 L30 44 L18 32 L30 20 Z" fill="#3B82F6"/>
   <!-- Right chevron - Purple -->

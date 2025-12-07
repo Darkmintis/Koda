@@ -1,12 +1,11 @@
-<svg title="Koda logo loader" alt="Koda logo loader" viewBox="0 0 48 48" width="48" height="48" xmlns="http://www.w3.org/2000/svg">
-  <defs>
-    <linearGradient id="koda-loader-gradient" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" style="stop-color:#7c3aed"/>
-      <stop offset="100%" style="stop-color:#a855f7"/>
-    </linearGradient>
-  </defs>
-  <!-- Modern K icon with gradient -->
-  <path d="M8 6h10v14l14-14h12L26 24l20 20H34L20 30v14H8V6z" fill="url(#koda-loader-gradient)">
+<svg title="Koda logo loader" alt="Koda logo loader" viewBox="0 0 64 64" width="64" height="64" xmlns="http://www.w3.org/2000/svg">
+  <!-- Koda Loader: << double chevron arrow with animation -->
+  <!-- Left chevron - Blue with pulse animation -->
+  <path d="M30 12 L10 32 L30 52 L30 44 L18 32 L30 20 Z" fill="#3B82F6">
     <animate attributeName="opacity" values="1;0.5;1" dur="1.5s" repeatCount="indefinite"/>
+  </path>
+  <!-- Right chevron - Purple with pulse animation (offset) -->
+  <path d="M50 12 L30 32 L50 52 L50 44 L38 32 L50 20 Z" fill="#8B5CF6">
+    <animate attributeName="opacity" values="0.5;1;0.5" dur="1.5s" repeatCount="indefinite"/>
   </path>
 </svg>

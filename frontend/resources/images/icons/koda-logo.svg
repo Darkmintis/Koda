@@ -1,14 +1,9 @@
-<svg title="Koda logo" alt="Koda logo" viewBox="0 0 200 50" width="200" height="50" xmlns="http://www.w3.org/2000/svg">
-  <defs>
-    <linearGradient id="koda-gradient" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" style="stop-color:#7c3aed"/>
-      <stop offset="100%" style="stop-color:#a855f7"/>
-    </linearGradient>
-  </defs>
-  <g fill="url(#koda-gradient)">
-    <!-- K icon -->
-    <path d="M5 5h8v16l12-16h10l-14 18 15 22h-10l-13-20v20h-8z"/>
-    <!-- KODA text -->
-    <text x="50" y="38" font-family="Inter, system-ui, sans-serif" font-weight="700" font-size="32" fill="currentColor">KODA</text>
-  </g>
+<svg title="Koda logo" alt="Koda logo" viewBox="0 0 200 60" width="200" height="60" xmlns="http://www.w3.org/2000/svg">
+  <!-- Koda Logo: << double chevron arrow (half-cut K shape) -->
+  <!-- Left chevron - Blue -->
+  <path d="M28 10 L8 30 L28 50 L28 42 L16 30 L28 18 Z" fill="#3B82F6"/>
+  <!-- Right chevron - Purple -->
+  <path d="M48 10 L28 30 L48 50 L48 42 L36 30 L48 18 Z" fill="#8B5CF6"/>
+  <!-- KODA text -->
+  <text x="60" y="40" font-family="Inter, system-ui, sans-serif" font-weight="700" font-size="28" fill="#1F2937">KODA</text>
 </svg>

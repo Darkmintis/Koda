@@ -8,7 +8,7 @@ on:
         description: 'Name of the branch or ref'
         type: string
         required: true
-        default: 'develop'
+        default: 'main'
       build_wasm:
         description: 'BUILD_WASM. Valid values: yes, no'
         type: string
@@ -25,7 +25,7 @@ on:
         description: 'Name of the branch or ref'
         type: string
         required: true
-        default: 'develop'
+        default: 'main'
       build_wasm:
         description: 'BUILD_WASM. Valid values: yes, no'
         type: string

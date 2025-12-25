@@ -241,6 +241,19 @@
             :on-click open-share-dialog}
         deprecated-icon/share])
 
+     ;; Koda AI Code Generation Button
+     [:button {:class (stl/css :koda-ai-btn)
+               :title "Generate Code with Koda AI"
+               :on-click #(st/emit! (modal/show {:type :koda-ai-generation
+                                                :origin :workspace-header}))}
+      [:span {:class (stl/css :koda-ai-icon)} "🚀"]]
+
+     ;; Koda Chat Button
+     [:button {:class (stl/css :koda-chat-btn)
+               :title "Chat with AI to design"
+               :on-click #(st/emit! (dw/toggle-layout-flag :koda-chat))}
+      [:span {:class (stl/css :koda-chat-icon)} "🤖"]]
+
      [:a {:class (stl/css :viewer-btn)
           :title (tr "workspace.header.viewer" (sc/get-tooltip :open-viewer))
           :on-click nav-to-viewer}

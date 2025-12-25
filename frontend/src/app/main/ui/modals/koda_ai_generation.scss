@@ -1,0 +1,372 @@
+// Koda AI Generation Modal Styles
+// This Source Code Form is subject to the terms of the Mozilla Public
+// License, v. 2.0. If a copy of the MPL was not distributed with this
+// file, You can obtain one at http://mozilla.org/MPL/2.0/.
+// Copyright (c) KODA INC
+
+@use "refactor/common-refactor.scss" as deprecated;
+
+// Main modal container
+.koda-ai-modal {
+  background: var(--modal-background-color);
+  border-radius: deprecated.$br-12;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+  width: 90vw;
+  max-width: 700px;
+  max-height: 90vh;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+// Modal header
+.modal-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: deprecated.$s-24 deprecated.$s-32;
+  border-bottom: 1px solid var(--modal-border-color);
+  background: var(--modal-background-color);
+}
+
+.modal-title-section {
+  display: flex;
+  align-items: center;
+  gap: deprecated.$s-16;
+}
+
+.modal-icon {
+  font-size: deprecated.$fs-32;
+}
+
+.modal-title-block {
+  display: flex;
+  flex-direction: column;
+  gap: deprecated.$s-4;
+}
+
+.modal-title {
+  font-size: deprecated.$fs-24;
+  font-weight: 700;
+  color: var(--modal-title-color);
+  margin: 0;
+}
+
+.modal-subtitle {
+  font-size: deprecated.$fs-16;
+  color: var(--modal-subtitle-color);
+  margin: 0;
+}
+
+.modal-close-btn {
+  background: none;
+  border: none;
+  font-size: deprecated.$fs-24;
+  color: var(--modal-close-color);
+  cursor: pointer;
+  padding: deprecated.$s-8;
+  border-radius: deprecated.$br-6;
+  transition: all 0.2s ease;
+
+  &:hover {
+    background: var(--modal-close-hover-background);
+    color: var(--modal-close-hover-color);
+  }
+}
+
+// Modal content
+.modal-content {
+  padding: deprecated.$s-32;
+  display: flex;
+  flex-direction: column;
+  gap: deprecated.$s-24;
+  overflow-y: auto;
+  flex: 1;
+}
+
+// Framework selector
+.framework-selector {
+  display: flex;
+  flex-direction: column;
+  gap: deprecated.$s-16;
+}
+
+.selector-title {
+  font-size: deprecated.$fs-18;
+  font-weight: 600;
+  color: var(--text-primary-color);
+  margin: 0;
+}
+
+.framework-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+  gap: deprecated.$s-12;
+}
+
+.framework-btn {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: deprecated.$s-8;
+  padding: deprecated.$s-16;
+  border: 2px solid var(--button-secondary-border-color);
+  border-radius: deprecated.$br-8;
+  background: var(--button-secondary-background-color);
+  color: var(--button-secondary-foreground-color);
+  cursor: pointer;
+  transition: all 0.2s ease;
+
+  &:hover {
+    border-color: var(--button-secondary-border-color-hover);
+    background: var(--button-secondary-background-color-hover);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  }
+
+  &.selected {
+    border-color: var(--button-primary-border-color);
+    background: var(--button-primary-background-color);
+    color: var(--button-primary-foreground-color);
+    box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.2);
+  }
+}
+
+.framework-icon {
+  font-size: deprecated.$fs-24;
+}
+
+.framework-name {
+  font-size: deprecated.$fs-14;
+  font-weight: 500;
+}
+
+// Generation options
+.generation-options {
+  display: flex;
+  flex-direction: column;
+  gap: deprecated.$s-16;
+}
+
+.options-title {
+  font-size: deprecated.$fs-18;
+  font-weight: 600;
+  color: var(--text-primary-color);
+  margin: 0;
+}
+
+.option-group {
+  display: flex;
+  flex-direction: column;
+  gap: deprecated.$s-12;
+}
+
+.option-label {
+  display: flex;
+  align-items: center;
+  gap: deprecated.$s-8;
+  font-size: deprecated.$fs-14;
+  color: var(--text-primary-color);
+  cursor: pointer;
+
+  input[type="checkbox"] {
+    width: deprecated.$s-16;
+    height: deprecated.$s-16;
+    accent-color: var(--checkbox-accent-color);
+  }
+}
+
+.option-text {
+  flex: 1;
+}
+
+.structure-select {
+  padding: deprecated.$s-8 deprecated.$s-12;
+  border: 1px solid var(--select-border-color);
+  border-radius: deprecated.$br-6;
+  background: var(--select-background-color);
+  color: var(--select-foreground-color);
+  font-size: deprecated.$fs-14;
+
+  &:focus {
+    outline: none;
+    border-color: var(--select-border-color-focus);
+  }
+}
+
+// Generation preview
+.generation-preview {
+  padding: deprecated.$s-20;
+  background: var(--panel-background-color);
+  border: 1px solid var(--panel-border-color);
+  border-radius: deprecated.$br-8;
+}
+
+.preview-title {
+  font-size: deprecated.$fs-18;
+  font-weight: 600;
+  color: var(--text-primary-color);
+  margin: 0 0 deprecated.$s-16 0;
+}
+
+.preview-stats {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+  gap: deprecated.$s-16;
+  margin-bottom: deprecated.$s-20;
+}
+
+.stat-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: deprecated.$s-4;
+  padding: deprecated.$s-12;
+  background: var(--stat-background-color);
+  border-radius: deprecated.$br-6;
+}
+
+.stat-icon {
+  font-size: deprecated.$fs-20;
+}
+
+.stat-label {
+  font-size: deprecated.$fs-12;
+  color: var(--text-secondary-color);
+  font-weight: 500;
+}
+
+.stat-value {
+  font-size: deprecated.$fs-16;
+  font-weight: 700;
+  color: var(--text-primary-color);
+
+  &.high-quality {
+    color: var(--success-color);
+  }
+}
+
+.preview-features {
+  border-top: 1px solid var(--panel-border-color);
+  padding-top: deprecated.$s-16;
+}
+
+.features-title {
+  font-size: deprecated.$fs-14;
+  font-weight: 600;
+  color: var(--text-primary-color);
+  margin: 0 0 deprecated.$s-12 0;
+}
+
+.features-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: deprecated.$s-8;
+}
+
+.features-list li {
+  display: flex;
+  align-items: center;
+  gap: deprecated.$s-8;
+  font-size: deprecated.$fs-14;
+  color: var(--text-secondary-color);
+
+  &::before {
+    content: "✅";
+    font-size: deprecated.$fs-12;
+  }
+}
+
+// Modal footer
+.modal-footer {
+  padding: deprecated.$s-24 deprecated.$s-32;
+  border-top: 1px solid var(--modal-border-color);
+  background: var(--modal-background-color);
+}
+
+// Generation progress
+.generation-progress {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: deprecated.$s-16;
+  width: 100%;
+}
+
+.progress-bar {
+  width: 100%;
+  height: deprecated.$s-8;
+  background: var(--progress-background-color);
+  border-radius: deprecated.$br-4;
+  overflow: hidden;
+}
+
+.progress-fill {
+  height: 100%;
+  background: linear-gradient(90deg, #667eea 0%, #764ba2 100%);
+  border-radius: deprecated.$br-4;
+  transition: width 0.3s ease;
+}
+
+.progress-text {
+  font-size: deprecated.$fs-16;
+  font-weight: 500;
+  color: var(--text-primary-color);
+}
+
+// Modal actions
+.modal-actions {
+  display: flex;
+  gap: deprecated.$s-12;
+  justify-content: flex-end;
+  width: 100%;
+}
+
+.cancel-btn {
+  padding: deprecated.$s-12 deprecated.$s-24;
+  background: var(--button-secondary-background-color);
+  color: var(--button-secondary-foreground-color);
+  border: 1px solid var(--button-secondary-border-color);
+  border-radius: deprecated.$br-6;
+  font-size: deprecated.$fs-14;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+
+  &:hover {
+    background: var(--button-secondary-background-color-hover);
+  }
+}
+
+.generate-icon {
+  font-size: deprecated.$fs-16;
+}
+
+// Responsive design
+@media (max-width: 768px) {
+  .koda-ai-modal {
+    width: 95vw;
+    margin: deprecated.$s-16;
+  }
+
+  .modal-header,
+  .modal-content,
+  .modal-footer {
+    padding: deprecated.$s-20;
+  }
+
+  .framework-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .modal-actions {
+    flex-direction: column;
+  }
+
+  .cancel-btn {
+    order: 2;
+  }
+}

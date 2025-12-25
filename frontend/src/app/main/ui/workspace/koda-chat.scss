@@ -1,0 +1,411 @@
+// Koda Chat Component Styles
+// This Source Code Form is subject to the terms of the Mozilla Public
+// License, v. 2.0. If a copy of the MPL was not distributed with this
+// file, You can obtain one at http://mozilla.org/MPL/2.0/.
+// Copyright (c) KODA INC
+
+@use "refactor/common-refactor.scss" as deprecated;
+
+// Main chat overlay
+.koda-chat-overlay {
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  background: rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(4px);
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+// Chat panel
+.koda-chat-panel {
+  background: var(--panel-background-color);
+  border-radius: deprecated.$br-12;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+  width: 90vw;
+  max-width: 800px;
+  height: 80vh;
+  max-height: 600px;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+// Chat header
+.chat-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: deprecated.$s-16 deprecated.$s-20;
+  border-bottom: 1px solid var(--panel-border-color);
+  background: var(--panel-background-color);
+}
+
+.chat-title {
+  display: flex;
+  align-items: center;
+  gap: deprecated.$s-12;
+}
+
+.chat-icon {
+  font-size: deprecated.$fs-24;
+}
+
+.chat-text {
+  font-size: deprecated.$fs-18;
+  font-weight: 600;
+  color: var(--text-primary-color);
+}
+
+.chat-subtitle {
+  font-size: deprecated.$fs-14;
+  color: var(--text-secondary-color);
+  margin-top: deprecated.$s-2;
+}
+
+.chat-close-btn {
+  background: none;
+  border: none;
+  font-size: deprecated.$fs-24;
+  color: var(--text-secondary-color);
+  cursor: pointer;
+  padding: deprecated.$s-4;
+  border-radius: deprecated.$br-4;
+
+  &:hover {
+    background: var(--button-secondary-background-color-hover);
+    color: var(--text-primary-color);
+  }
+}
+
+// Model selector
+.chat-model-section {
+  padding: deprecated.$s-16 deprecated.$s-20;
+  border-bottom: 1px solid var(--panel-border-color);
+  background: var(--panel-background-color);
+}
+
+.model-selector {
+  display: flex;
+  flex-direction: column;
+  gap: deprecated.$s-12;
+}
+
+.model-select {
+  padding: deprecated.$s-8 deprecated.$s-12;
+  border: 1px solid var(--input-border-color);
+  border-radius: deprecated.$br-6;
+  background: var(--input-background-color);
+  color: var(--input-foreground-color);
+  font-size: deprecated.$fs-14;
+
+  &:focus {
+    outline: none;
+    border-color: var(--input-border-color-focus);
+    box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.2);
+  }
+}
+
+.model-info {
+  font-size: deprecated.$fs-12;
+  color: var(--text-secondary-color);
+}
+
+.model-details {
+  display: flex;
+  gap: deprecated.$s-16;
+  margin-top: deprecated.$s-8;
+}
+
+.model-context,
+.model-pricing {
+  font-size: deprecated.$fs-12;
+  color: var(--text-secondary-color);
+}
+
+// Chat messages area
+.chat-messages {
+  flex: 1;
+  overflow-y: auto;
+  padding: deprecated.$s-20;
+  display: flex;
+  flex-direction: column;
+  gap: deprecated.$s-16;
+}
+
+// Welcome message
+.chat-welcome {
+  text-align: center;
+  padding: deprecated.$s-40;
+  color: var(--text-primary-color);
+}
+
+.welcome-icon {
+  font-size: deprecated.$fs-48;
+  margin-bottom: deprecated.$s-16;
+}
+
+.welcome-title {
+  font-size: deprecated.$fs-24;
+  font-weight: 600;
+  margin-bottom: deprecated.$s-8;
+  color: var(--text-primary-color);
+}
+
+.welcome-text {
+  font-size: deprecated.$fs-16;
+  color: var(--text-secondary-color);
+  margin-bottom: deprecated.$s-20;
+  line-height: 1.5;
+}
+
+.welcome-examples {
+  margin-top: deprecated.$s-20;
+}
+
+.examples-title {
+  font-size: deprecated.$fs-14;
+  font-weight: 500;
+  color: var(--text-secondary-color);
+  margin-bottom: deprecated.$s-12;
+}
+
+.example-buttons {
+  display: flex;
+  gap: deprecated.$s-8;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.example-btn {
+  padding: deprecated.$s-8 deprecated.$s-16;
+  background: var(--button-secondary-background-color);
+  color: var(--button-secondary-foreground-color);
+  border: 1px solid var(--button-secondary-border-color);
+  border-radius: deprecated.$br-6;
+  font-size: deprecated.$fs-14;
+  cursor: pointer;
+  transition: all 0.2s ease;
+
+  &:hover {
+    background: var(--button-secondary-background-color-hover);
+    transform: translateY(-1px);
+  }
+}
+
+// Chat messages
+.chat-message {
+  display: flex;
+  gap: deprecated.$s-12;
+  max-width: 80%;
+
+  &.user-message {
+    align-self: flex-end;
+    flex-direction: row-reverse;
+
+    .message-avatar {
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    }
+
+    .message-content {
+      align-items: flex-end;
+    }
+  }
+
+  &.ai-message {
+    align-self: flex-start;
+
+    .message-avatar {
+      background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+    }
+  }
+}
+
+.message-avatar {
+  width: deprecated.$s-32;
+  height: deprecated.$s-32;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-size: deprecated.$fs-16;
+  flex-shrink: 0;
+}
+
+.message-content {
+  display: flex;
+  flex-direction: column;
+  gap: deprecated.$s-8;
+}
+
+.message-text {
+  padding: deprecated.$s-12 deprecated.$s-16;
+  background: var(--message-background-color);
+  border-radius: deprecated.$br-16;
+  border-bottom-left-radius: deprecated.$br-4;
+  font-size: deprecated.$fs-14;
+  line-height: 1.4;
+  color: var(--text-primary-color);
+  max-width: 500px;
+  word-wrap: break-word;
+}
+
+.user-message .message-text {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  border-bottom-left-radius: deprecated.$br-16;
+  border-bottom-right-radius: deprecated.$br-4;
+}
+
+.message-designs {
+  margin-top: deprecated.$s-8;
+}
+
+.designs-header {
+  font-size: deprecated.$fs-12;
+  font-weight: 500;
+  color: var(--text-secondary-color);
+  margin-bottom: deprecated.$s-8;
+}
+
+.design-preview {
+  padding: deprecated.$s-12;
+  background: var(--panel-background-color);
+  border: 1px solid var(--panel-border-color);
+  border-radius: deprecated.$br-8;
+  margin-bottom: deprecated.$s-8;
+}
+
+.design-name {
+  font-size: deprecated.$fs-14;
+  font-weight: 600;
+  color: var(--text-primary-color);
+  margin-bottom: deprecated.$s-4;
+}
+
+.design-description {
+  font-size: deprecated.$fs-12;
+  color: var(--text-secondary-color);
+  margin-bottom: deprecated.$s-8;
+}
+
+.import-design-btn {
+  padding: deprecated.$s-6 deprecated.$s-12;
+  background: var(--button-primary-background-color);
+  color: var(--button-primary-foreground-color);
+  border: none;
+  border-radius: deprecated.$br-4;
+  font-size: deprecated.$fs-12;
+  cursor: pointer;
+  transition: all 0.2s ease;
+
+  &:hover {
+    background: var(--button-primary-background-color-hover);
+    transform: translateY(-1px);
+  }
+}
+
+.message-time {
+  font-size: deprecated.$fs-10;
+  color: var(--text-secondary-color);
+  margin-top: deprecated.$s-4;
+}
+
+// Chat input
+.chat-input-container {
+  padding: deprecated.$s-16 deprecated.$s-20;
+  border-top: 1px solid var(--panel-border-color);
+  background: var(--panel-background-color);
+}
+
+.chat-input {
+  width: 100%;
+  min-height: deprecated.$s-80;
+  padding: deprecated.$s-12 deprecated.$s-16;
+  border: 1px solid var(--input-border-color);
+  border-radius: deprecated.$br-8;
+  background: var(--input-background-color);
+  color: var(--input-foreground-color);
+  font-size: deprecated.$fs-14;
+  line-height: 1.4;
+  resize: vertical;
+  font-family: inherit;
+
+  &:focus {
+    outline: none;
+    border-color: var(--input-border-color-focus);
+    box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.2);
+  }
+
+  &::placeholder {
+    color: var(--input-placeholder-color);
+  }
+}
+
+.chat-input-actions {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: deprecated.$s-12;
+}
+
+.input-hints {
+  font-size: deprecated.$fs-12;
+  color: var(--text-secondary-color);
+}
+
+.hint-text {
+  display: flex;
+  align-items: center;
+  gap: deprecated.$s-4;
+}
+
+.send-button {
+  padding: deprecated.$s-10 deprecated.$s-20;
+  background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+  color: white;
+  border: none;
+  border-radius: deprecated.$br-6;
+  font-size: deprecated.$fs-14;
+  font-weight: 500;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: deprecated.$s-8;
+  transition: all 0.2s ease;
+
+  &:hover:not(:disabled) {
+    background: linear-gradient(135deg, #059669 0%, #047857 100%);
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(16, 185, 129, 0.3);
+  }
+
+  &:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+    transform: none;
+  }
+}
+
+// Responsive design
+@media (max-width: 768px) {
+  .koda-chat-panel {
+    width: 95vw;
+    height: 90vh;
+    margin: deprecated.$s-16;
+  }
+
+  .chat-messages {
+    padding: deprecated.$s-16;
+  }
+
+  .example-buttons {
+    flex-direction: column;
+    align-items: center;
+  }
+}

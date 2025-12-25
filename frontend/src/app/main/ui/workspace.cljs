@@ -39,6 +39,7 @@
    [app.main.ui.workspace.tokens.settings]
    [app.main.ui.workspace.tokens.themes.create-modal]
    [app.main.ui.workspace.viewport :refer [viewport*]]
+   [app.main.ui.workspace.koda-chat :refer [koda-chat*]]
    [app.util.debug :as dbg]
    [app.util.dom :as dom]
    [app.util.globals :as globals]
@@ -120,7 +121,10 @@
                      :file file
                      :selected selected
                      :section options-mode
-                     :drawing-tool (get drawing :tool)}])]))
+                     :drawing-tool (get drawing :tool)}])
+
+     ;; Koda Chat Component
+     [:> koda-chat* {:layout layout :file file}]]))
 
 (mf/defc workspace-loader*
   {::mf/private true}

@@ -5,6 +5,9 @@
 // Copyright (c) KALEIDOS INC
 
 @use "refactor/common-refactor.scss" as deprecated;
+@use "workspace/right_header.scss";
+@use "workspace/koda-chat.scss";
+@use "modals/koda_ai_generation.scss";
 
 .workspace {
   @extend .new-scrollbar;

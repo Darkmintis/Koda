@@ -243,3 +243,54 @@
   top: 6px;
   right: 6px;
 }
+
+// Koda AI and Chat Buttons
+.koda-ai-btn,
+.koda-chat-btn {
+  @extend .button-tertiary;
+  border-radius: deprecated.$br-8;
+  margin: 0;
+  width: deprecated.$s-28;
+  height: deprecated.$s-28;
+  border: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: deprecated.$fs-16;
+  transition: all 0.2s ease;
+
+  &:hover {
+    background-color: var(--button-tertiary-background-color-focus);
+    transform: scale(1.05);
+  }
+
+  &:active {
+    transform: scale(0.95);
+  }
+}
+
+.koda-ai-btn {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+
+  &:hover {
+    background: linear-gradient(135deg, #5a6fd8 0%, #6a4190 100%);
+    box-shadow: 0 2px 8px rgba(102, 126, 234, 0.3);
+  }
+}
+
+.koda-chat-btn {
+  background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+  color: white;
+
+  &:hover {
+    background: linear-gradient(135deg, #059669 0%, #047857 100%);
+    box-shadow: 0 2px 8px rgba(16, 185, 129, 0.3);
+  }
+}
+
+.koda-ai-icon,
+.koda-chat-icon {
+  font-size: deprecated.$fs-14;
+  line-height: 1;
+}

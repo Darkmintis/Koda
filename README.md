@@ -27,13 +27,23 @@ Full-featured design editor with everything you need:
 - Real-time collaboration
 - Interactive prototyping
 
-### AI-Powered Code Generation
-Transform your designs into production-ready code:
-- **React** / **Vue** / **Angular** / **HTML+CSS**
-- Pixel-perfect output matching your designs
-- Clean, maintainable code structure
-- Responsive breakpoints
-- Design token integration
+### Two Code Generation Approaches
+
+#### 🎯 **Quick Component Export (Free)**
+Get instant code snippets for individual components:
+- **One-Click Copy**: Copy code for buttons, cards, forms, etc.
+- **Multiple Formats**: React, Vue, HTML+CSS, Tailwind
+- **Fast Prototyping**: Perfect for component libraries
+- **Basic Styling**: Direct CSS from your design
+
+#### 🚀 **AI Prototype-to-App Generation (Pro)**
+Transform complete prototypes into production applications:
+- **Full Application Code**: Complete React/Vue/Angular apps with routing
+- **AI Intelligence**: Automatic optimization, accessibility, performance
+- **Enterprise Features**: SOC 2 compliance, team collaboration, security
+- **Production Ready**: Testing, error handling, deployment configs
+- **Cross-Platform**: Web, Mobile (React Native, Flutter), Desktop (Electron)
+- **Replaces Frontend Devs**: Design → Code → Deploy workflow
 
 ### Built for Teams
 - Real-time collaboration

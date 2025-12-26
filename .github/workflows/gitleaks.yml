@@ -1,0 +1,57 @@
+name: "GitLeaks - Secret & Credential Detection"
+
+on:
+  push:
+    branches: [ "main", "develop" ]
+  pull_request:
+    branches: [ "main", "develop" ]
+  schedule:
+    - cron: '0 3 * * 0' # Weekly on Sunday at 3 AM UTC
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  security-events: write
+  actions: read
+  pull-requests: write
+
+jobs:
+  gitleaks:
+    name: Secret Scanning
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0 # Full history for comprehensive scanning
+
+      - name: Run Gitleaks Secret Scanner
+        uses: gitleaks/gitleaks-action@v2.3.6
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITLEAKS_LICENSE: ${{ secrets.GITLEAKS_LICENSE }}
+          GITLEAKS_NOTIFY_USER_LIST: '@security-team'
+          GITLEAKS_ENABLE_COMMENTS: true
+
+      - name: Upload Gitleaks Report
+        uses: actions/upload-artifact@v4
+        if: failure()
+        with:
+          name: gitleaks-report
+          path: |
+            gitleaks-report.json
+            gitleaks-report.sarif
+          retention-days: 30
+
+      - name: Generate Summary Report
+        if: always()
+        run: |
+          echo "## 🔐 Gitleaks Secret Scan Results" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          if [ -f "gitleaks-report.json" ]; then
+            echo "⚠️ Potential secrets detected! Please review the security tab." >> $GITHUB_STEP_SUMMARY
+          else
+            echo "✅ No secrets detected in the codebase." >> $GITHUB_STEP_SUMMARY
+          fi

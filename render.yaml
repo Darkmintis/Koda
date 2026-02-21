@@ -1,0 +1,37 @@
+services:
+  - type: web
+    name: koda-backend
+    runtime: java
+    plan: free
+    buildCommand: cd backend && clojure -T:build jar
+    startCommand: java -jar backend/target/koda.jar -m app.main
+    envVars:
+      - key: JAVA_OPTS
+        value: "-Xmx512m -Xms256m"
+      - key: KODA_DATABASE_URI
+        fromDatabase:
+          name: koda-db
+          property: connectionString
+      - key: KODA_REDIS_URI
+        sync: false
+      - key: KODA_S3_ENDPOINT
+        sync: false
+      - key: KODA_S3_ACCESS_KEY
+        sync: false
+      - key: KODA_S3_SECRET_KEY
+        sync: false
+      - key: KODA_S3_BUCKET
+        value: koda-files
+      - key: KODA_SMTP_ENABLED
+        value: false
+      - key: KODA_HTTP_SERVER_PORT
+        value: 10000
+      - key: KODA_PUBLIC_URI
+        value: https://koda-backend.onrender.com
+    healthCheckPath: /api/health
+    autoDeploy: true
+
+databases:
+  - name: koda-db
+    databaseName: koda
+    plan: free

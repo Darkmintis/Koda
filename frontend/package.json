@@ -92,7 +92,7 @@
     "rimraf": "^6.0.1",
     "sass": "^1.89.0",
     "sass-embedded": "^1.89.0",
-    "storybook": "10.0.4",
+    "storybook": "10.2.10",
     "svg-sprite": "^2.0.4",
     "typescript": "^5.9.2",
     "vite": "^6.4.1",

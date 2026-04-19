@@ -10,7 +10,7 @@
   "regions": ["iad1"],
   "env": {
     "NODE_ENV": "production",
-    "KODA_BACKEND_URL": "@koda_backend_url"
+    "KODA_GATEWAY_URL": "@koda_gateway_url"
   },
   "build": {
     "env": {
@@ -57,7 +57,27 @@
   "rewrites": [
     {
       "source": "/api/:path*",
-      "destination": "@koda_backend_url/api/:path*"
+      "destination": "@koda_gateway_url/api/:path*"
+    },
+    {
+      "source": "/chat/socket.io/:path*",
+      "destination": "@koda_gateway_url/chat/socket.io/:path*"
+    },
+    {
+      "source": "/ws/:path*",
+      "destination": "@koda_gateway_url/ws/:path*"
+    },
+    {
+      "source": "/assets/:path*",
+      "destination": "@koda_gateway_url/assets/:path*"
+    },
+    {
+      "source": "/internal/:path*",
+      "destination": "@koda_gateway_url/internal/:path*"
+    },
+    {
+      "source": "/fonts/:path*",
+      "destination": "@koda_gateway_url/fonts/:path*"
     }
   ]
 }

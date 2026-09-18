@@ -1,3 +1,5 @@
+> ⚠️ **Archived.** Koda has been rewritten from scratch and moved to [Koda-Works/koda](https://github.com/Koda-Works). This repo is no longer maintained.
+
 [uri_license]: https://www.mozilla.org/en-US/MPL/2.0
 [uri_license_image]: https://img.shields.io/badge/MPL-2.0-blue.svg
 
